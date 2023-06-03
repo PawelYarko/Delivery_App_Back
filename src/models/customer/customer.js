@@ -33,14 +33,6 @@ const customerSchema = new Schema({
         type: String,
         required: [true, 'Address is required'],
       },
-    // order: {
-    //     products:{
-
-    //     },
-    //     totalPrice:{
-            
-    //     }
-    // }
 }, {versionKey: false, timestamps: true});
 
 customerSchema.post("save", handlerErrors);

@@ -3,7 +3,7 @@ const Joi = require("joi");
 
 const { handlerErrors } = require("../../helpers");
                     
-const productSchema = new Schema({
+const orderSchema = new Schema({
   shopTitle:{
     type: String,
     required: true
@@ -12,46 +12,45 @@ const productSchema = new Schema({
     type: String,
     required: true
   },
-  article: {
-    type: String,
-    required: true
-  },
-  img: {
-    type: String,
-    required: true
-  },
-  imgAlt: {
-    type: String,
-  },
   price: {
     type: Number,
+    default: 0,
     required: true
   },
   ammount: {
     type: Number,
-    default: false,
+    default: 0,
     required: true
   }, 
+  totalPrice: {
+    type: Number,
+    default: 0,
+    required: true 
+  },
+  owner: {
+    type: Schema.Types.ObjectId, 
+    required: true,
+    ref: 'customer'
+  },
 }, {versionKey: false, timestamps: true});
 
-productSchema.post("save", handlerErrors);
+orderSchema.post("save", handlerErrors);
 
 const addSchema = Joi.object({
   shopTitle: Joi.string().required(), 
-  productTitle: Joi.string().required(),
-  article: Joi.string().required(), 
-  img: Joi.string().required(), 
+  productTitle: Joi.string().required(), 
   price: Joi.number().required(),
   ammount: Joi.number().required(),
+  totalPrice: Joi.number().required(),
 });
 
 const schemas = {
   addSchema,
 };
 
-const Product = model("product", productSchema);
+const Order = model("order", orderSchema);
 
 module.exports = {
-  Product,
+  Order,
   schemas
 };
